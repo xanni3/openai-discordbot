@@ -55,8 +55,6 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     global chat_log
-    if message.author == bot.user:
-        return
 
     if bot.user.mentioned_in(message):
         question = message.clean_content.replace("@anibot ", "")
