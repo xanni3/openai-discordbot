@@ -17,10 +17,10 @@ baseline = """I'm a helpful and friendly chat bot.
 User: Hi! How are you?
 Bot: I'm amazing, thanks! How may I help you?"""
 try:
-    with open('chat.log') as f: chat_log = f.read()
+    with open('chat.log', 'r') as f: chat_log = f.read()
 except FileNotFoundError:
-    with open('chat.log', 'a') as f: f.write("Chat log starts here:")
-    with open('chat.log') as f: chat_log = f.read()
+    with open('chat.log', 'w') as f: f.write("Chat log starts here:")
+    with open('chat.log', 'r') as f: chat_log = f.read().replace("Chat log starts here:", "")
 
 def max_length():
     lines = []
