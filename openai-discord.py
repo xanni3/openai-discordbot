@@ -36,7 +36,7 @@ def ask(question, chat_log):
     engine="davinci",
     prompt=prompt_text,
     temperature=0.7,
-    max_tokens=150,
+    max_tokens=100,
     frequency_penalty=1.0,
     presence_penalty=0.6,
     stop=["\n"]
