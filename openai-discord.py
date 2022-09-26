@@ -50,6 +50,7 @@ def append_to_chat_log(question, answer):
 @bot.event
 async def on_ready():
     print(f'{bot.user} Online!')
+    print(f'{bot.user.name}')
 
 @bot.event
 async def on_message(message):
