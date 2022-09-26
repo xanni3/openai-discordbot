@@ -35,7 +35,7 @@ def ask(question, chat_log):
     response = openai.Completion.create(
     engine="davinci",
     prompt=prompt_text,
-    temperature=0.95,
+    temperature=0.7,
     max_tokens=150,
     frequency_penalty=1.0,
     presence_penalty=0.6,
