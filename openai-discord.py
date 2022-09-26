@@ -19,7 +19,7 @@ Bot: I'm amazing, thanks! How may I help you?"""
 try:
     with open('chat.log') as f: chat_log = f.read()
 except FileNotFoundError:
-    with open('chat.log', 'a') as f: f.write("")
+    with open('chat.log', 'a') as f: f.write("Chat log starts here:")
     with open('chat.log') as f: chat_log = f.read()
 
 def max_length():
@@ -27,7 +27,7 @@ def max_length():
     with open('chat.log', 'r') as f: lines = f.readlines()
     with open('chat.log', 'w') as f:
         for number, line in enumerate(lines):
-            if number not in [0, 1]:
+            if number not in [1, 2]:
                 f.write(line)
 
 def ask(question, chat_log):
