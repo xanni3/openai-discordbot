@@ -11,34 +11,33 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 completion = openai.Completion()
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!",intents=intents)
-start_sequence = "\nUser:"
-restart_sequence = "\nBot:"
+user_prompt = "User:"
+bot_response = "Bot:"
 baseline = """I'm a helpful and friendly chat bot.
 User: Hi! How are you?
 Bot: I'm amazing, thanks! How may I help you?"""
 try:
-    with open('chat.log', 'r') as f: chat_log = f.read()
+    with open('chat.log') as f: chat_log = f.read()
 except FileNotFoundError:
-    with open('chat.log', 'w') as f: f.write(baseline)
-    with open('chat.log', 'r') as f: chat_log = f.read()
+    with open('chat.log', 'a') as f: f.write("")
+    with open('chat.log') as f: chat_log = f.read()
 
 def max_length():
     lines = []
     with open('chat.log', 'r') as f: lines = f.readlines()
     with open('chat.log', 'w') as f:
         for number, line in enumerate(lines):
-            if number not in [3, 4]:
+            if number not in [0, 1]:
                 f.write(line)
 
 def ask(question, chat_log):
-    prompt_text = f'{chat_log}{start_sequence} {question}{restart_sequence}'
+    prompt_text = f'{baseline}\n{chat_log}\n{user_prompt} {question}\n{bot_response} '
     response = openai.Completion.create(
     engine="davinci",
     prompt=prompt_text,
-    temperature=0.9,
+    temperature=0.95,
     max_tokens=150,
-    top_p=1,
-    frequency_penalty=1,
+    frequency_penalty=1.0,
     presence_penalty=0.6,
     stop=["\n"]
     )
@@ -46,7 +45,7 @@ def ask(question, chat_log):
     return str(story)
 
 def append_to_chat_log(question, answer):
-    return f'{start_sequence} {question}{restart_sequence}{answer}'
+    return f'\n{user_prompt} {question}\n{bot_response} {answer}'
 
 @bot.event
 async def on_ready():
@@ -55,6 +54,8 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     global chat_log
+    if message.author == bot.user:
+        return
 
     if bot.user.mentioned_in(message):
         question = message.clean_content
