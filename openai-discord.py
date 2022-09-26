@@ -50,7 +50,6 @@ def append_to_chat_log(question, answer):
 @bot.event
 async def on_ready():
     print(f'{bot.user} Online!')
-    print(f'{bot.user.name}')
 
 @bot.event
 async def on_message(message):
@@ -59,7 +58,8 @@ async def on_message(message):
         return
 
     if bot.user.mentioned_in(message):
-        question = message.clean_content
+        question = message.clean_content.replace(f'@{bot.user.name} ', "")
+        question = question.replace(f'@{bot.user.name}', "")
         answer = ask(question, chat_log)
         current_interaction = append_to_chat_log(question, answer)
         if len(chat_log) > 1500: max_length()
