@@ -17,10 +17,10 @@ baseline = """I'm a helpful and friendly chat bot.
 User: Hi! How are you?
 Bot: I'm amazing, thanks! How may I help you?"""
 try:
-    with open('chat.log') as f: chat_log = f.read()
+    with open('chat.log', 'r') as f: chat_log = f.read()
 except FileNotFoundError:
-    with open('chat.log', 'a') as f: f.write(baseline)
-    with open('chat.log') as f: chat_log = f.read()
+    with open('chat.log', 'w') as f: f.write(baseline)
+    with open('chat.log', 'r') as f: chat_log = f.read()
 
 def max_length():
     lines = []
@@ -57,8 +57,7 @@ async def on_message(message):
     global chat_log
 
     if bot.user.mentioned_in(message):
-        question = message.clean_content.replace("@anibot ", "")
-        question = question.replace("@anibot", "")
+        question = message.clean_content
         answer = ask(question, chat_log)
         current_interaction = append_to_chat_log(question, answer)
         if len(chat_log) > 1500: max_length()
