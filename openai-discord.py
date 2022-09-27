@@ -55,7 +55,7 @@ async def on_ready():
 async def on_message(message):
     global chat_log
     global user_prompt
-    user_prompt = f'{message.user.name}:'
+    user_prompt = f'{message.author.name}:'
     if message.author == bot.user:
         return
 
