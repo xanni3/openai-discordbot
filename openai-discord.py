@@ -23,6 +23,7 @@ except FileNotFoundError:
     with open('chat.log', 'r') as f: chat_log = f.read().replace("Chat log starts here:", "")
 
 def max_length():
+    global chat_log
     lines = []
     with open('chat.log', 'r') as f: lines = f.readlines()
     with open('chat.log', 'w') as f:
