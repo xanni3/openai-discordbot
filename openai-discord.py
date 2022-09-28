@@ -29,6 +29,7 @@ def max_length():
         for number, line in enumerate(lines):
             if number not in [1, 2]:
                 f.write(line)
+    with open('chat.log', 'r') as f: chat_log = f.read().replace("Chat log starts here:", "")
 
 def ask(question, chat_log):
     prompt_text = f'{baseline}\n{chat_log}\n{user_prompt} {question}\n{bot_response} '
